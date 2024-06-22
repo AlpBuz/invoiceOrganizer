@@ -43,6 +43,11 @@ def getDestination(file): #Organize the files to folders based on the users firs
         reval = fileNameSplit[-1][0]
         reval = reval.upper()
         return reval
+    
+
+def subFolders(parentFolder):
+
+    return False
 
 
 
@@ -51,21 +56,27 @@ def getDestination(file): #Organize the files to folders based on the users firs
 def main():
     #have user enter the path to the file
     directory = getFolder("Choice the folder that has the files you want to move")
-    pdf_Files = os.listdir(directory)
+    items = os.listdir(directory)
     destination = getFolder("Choice the folder that you want the files to be moved to")
     
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for filename in filenames:
+            if filename.lower().endswith('.pdf'):
+                # Full path to the PDF file
+                source_file_path = os.path.join(dirpath, filename)
+                
+                # Determine destination folder based on file name (placeholder function)
+                file_destination_name = getDestination(filename)
+                file_destination_path = os.path.join(destination, file_destination_name)
+                
+                # Ensure the destination folder exists, create it if not
+                if not checkFolderExists(file_destination_path):
+                    os.makedirs(file_destination_path)
+                
+                # Move the file to the destination folder
+                moveFile(source_file_path, file_destination_path)
+                print(f"Moved file: {filename} to {file_destination_path}")
 
-    for file in pdf_Files:
-        fileDestinationName = getDestination(file) #get the destination of where the file will be stored based on the name of the file
-        oldFilePath = directory + "\\" + file
-        fileDestinationPath = destination + "\\" + fileDestinationName #create the path for where the file will be stored
-
-        if not checkFolderExists(fileDestinationPath):
-            os.makedirs(fileDestinationPath)
-        
-
-
-        moveFile(oldFilePath, fileDestinationPath)
 
 
         
