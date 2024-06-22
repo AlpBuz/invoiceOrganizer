@@ -1,30 +1,16 @@
 import shutil
 import os
+import tkinter as tk
+from tkinter import filedialog
 
-def get_directory():
-    while True:
-        # Prompt the user to enter the directory path
-        directory = input("Please enter the directory path: ")
-
-        # Validate if the entered path is a valid directory
-        if os.path.isdir(directory):
-            print(f"The entered directory is: {directory}")
-            return directory
-        else:
-            print("Invalid directory path. Please try again.\n")
-    
-
-def destinationFolder():
-    while True:
-        # Prompt the user to enter the directory path
-        Destination = input("Please enter the Destination path: ")
-
-        # Validate if the entered path is a valid directory
-        if os.path.isdir(Destination):
-            print(f"The entered Destination is: {Destination}")
-            return Destination
-        else:
-            print("Invalid Destination path. Please try again.\n")
+def getFolder(messagePrompt):
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
+    root.update()
+    # Open the folder selection dialog
+    folderPath  = filedialog.askdirectory(title= messagePrompt)
+    root.destroy()
+    return folderPath 
     
 
 
@@ -35,14 +21,14 @@ def checkFolderExists(destination):
 
     return False
 
+
+
 def moveFile(oldpath, destination):
     try:
         shutil.move(oldpath, destination)
         print(f"File moved successfully from '{oldpath}' to '{destination}'.") 
     except Exception as e:
         print(f"Error moving file: {e}")
-
-
 
 
 
@@ -64,12 +50,10 @@ def getDestination(file): #Organize the files to folders based on the users firs
 
 def main():
     #have user enter the path to the file
-    directory = get_directory()
+    directory = getFolder("Choice the folder that has the files you want to move")
     pdf_Files = os.listdir(directory)
-    destination = destinationFolder()
+    destination = getFolder("Choice the folder that you want the files to be moved to")
     
-
-    #start moving the files
 
     for file in pdf_Files:
         fileDestinationName = getDestination(file) #get the destination of where the file will be stored based on the name of the file
@@ -87,12 +71,6 @@ def main():
         
 
     print("File Movement completed")
-
-
-
-
-
-
 
 
 
