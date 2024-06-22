@@ -65,7 +65,7 @@ def main():
                 # Full path to the PDF file
                 source_file_path = os.path.join(dirpath, filename)
                 
-                # Determine destination folder based on file name (placeholder function)
+                # Determine destination folder based on file name
                 file_destination_name = getDestination(filename)
                 file_destination_path = os.path.join(destination, file_destination_name)
                 
